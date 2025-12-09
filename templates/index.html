@@ -1,0 +1,105 @@
+<!-- ==========================================================
+     index.html
+     Giao diện chính của hệ thống phát hiện tin giả
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tiêu đề trang -->
+    <title>Hệ thống phát hiện tin giả</title>
+
+    <!-- Link file CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- ====================== HEADER ========================== -->
+    <header class="header">
+        <h1 class="title">🔍 Hệ thống phát hiện tin giả sử dụng AI</h1>
+        <p class="subtitle">SVM • CNN • BiLSTM • DistilBERT (nếu khả dụng)</p>
+    </header>
+
+    <!-- ====================== KHUNG CHÍNH ===================== -->
+    <div class="container">
+
+        <!-- ============ KHỐI BÊN TRÁI – FORM NHẬP ============== -->
+        <div class="left-panel">
+
+            <h2>📝 Nhập nội dung cần phân tích</h2>
+
+            <!-- Form gửi dữ liệu dự đoán -->
+            <form id="predict-form">
+
+                <!-- Ô nhập văn bản -->
+                <label for="input_text">Nội dung văn bản</label>
+                <textarea id="input_text" name="input_text" rows="8" placeholder="Nhập nội dung tin tức cần kiểm tra..."></textarea>
+
+                <!-- Dropdown chọn mô hình -->
+                <label for="model_name">Chọn mô hình AI</label>
+                <select id="model_name" name="model_name">
+                    <option value="">-- Chọn mô hình --</option>
+
+                    <!-- Danh sách model Flask gửi sang -->
+                    {% for m in models %}
+                    <option value="{{ m }}">{{ m }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Các nút bấm -->
+                <div class="buttons">
+                    <button type="submit" class="btn-primary" id="btn-predict">Kiểm tra</button>
+                    <button type="button" class="btn-secondary" id="btn-clear">Xóa</button>
+                </div>
+            </form>
+
+            <!-- Gợi ý ví dụ -->
+            <div class="examples">
+                <h3>⚡ Ví dụ nhanh</h3>
+
+                <button class="example-btn" data-text="Chính phủ vừa công bố chính sách mới nhằm hỗ trợ người dân vùng lũ." >
+                    Ví dụ tin thật (VI)
+                </button>
+
+                <button class="example-btn" data-text="Giật mình: Người ngoài hành tinh đã xuất hiện tại Hà Nội." >
+                    Ví dụ tin giả (VI)
+                </button>
+
+                <button class="example-btn" data-text="The ministry announced a new healthcare plan effective next month." >
+                    Real news (EN)
+                </button>
+
+                <button class="example-btn" data-text="Breaking: NASA confirms aliens landed in New York last night." >
+                    Fake news (EN)
+                </button>
+            </div>
+
+        </div>
+
+        <!-- ============ KHỐI BÊN PHẢI – KẾT QUẢ ================ -->
+        <div class="right-panel">
+
+            <h2>📊 Kết quả phân tích</h2>
+
+            <div id="result-card" class="result-card empty">
+                <p class="placeholder">Chưa có kết quả</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============== FOOTER =============== -->
+    <footer class="footer">
+        © 2025 - Demo phát hiện tin giả (Fake News Detection)
+    </footer>
+
+    <!-- Link tới file JS -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+
+</html>
